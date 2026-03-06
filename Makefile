@@ -5,8 +5,14 @@ AGENTS ?= claude codex
 DEST_DIR_claude := $(HOME)/.claude/skills
 DEST_DIR_codex := $(HOME)/.codex/skills
 
-.PHONY: install FORCE
-install: $(addprefix install-agent-,$(AGENTS))
+CLAUDE_DIR := $(HOME)/.claude
+
+.PHONY: install install-claude-config FORCE
+install: install-claude-config $(addprefix install-agent-,$(AGENTS))
+
+install-claude-config:
+	cp claude/statusline.sh $(CLAUDE_DIR)/statusline.sh
+	@echo "Installed statusline.sh to $(CLAUDE_DIR)/"
 
 install-agent-%: FORCE
 	@dest_dir='$(DEST_DIR_$*)'; \
