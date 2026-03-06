@@ -8,7 +8,7 @@ DEST_DIR_codex := $(HOME)/.codex/skills
 CLAUDE_DIR := $(HOME)/.claude
 
 .PHONY: install test install-claude-config FORCE
-install: install-claude-config $(addprefix install-agent-,$(AGENTS))
+install: test $(if $(filter claude,$(AGENTS)),install-claude-config) $(addprefix install-agent-,$(AGENTS))
 
 test:
 	@if [ -z "$(SKILLS)" ]; then \

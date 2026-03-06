@@ -2,11 +2,12 @@
 
 Skills, configuration, and utilities for AI coding assistants.
 
-Primary targets: [Claude Code](https://claude.ai/code), [Codex CLI](https://github.com/openai/codex), and Gemini CLI.
+Primary targets: [Claude Code](https://claude.ai/code) and [Codex CLI](https://github.com/openai/codex).
 
 ## Structure
 
-- `skills/` — Claude Code skills (installable via `make install`)
+- `skills/` — Skills installed to each agent's skills directory
+- `claude/` — Claude Code-specific configuration (status line, etc.)
 
 ## Install
 
@@ -14,4 +15,20 @@ Primary targets: [Claude Code](https://claude.ai/code), [Codex CLI](https://gith
 make install
 ```
 
-This copies skills into `~/.claude/skills/` where Claude Code can find them.
+Runs `make test`, then installs:
+
+- `skills/*` → `~/.claude/skills/` and `~/.codex/skills/`
+- `claude/statusline.sh` → `~/.claude/statusline.sh`
+
+To install for a specific agent only:
+
+```sh
+make install AGENTS=claude
+make install AGENTS=codex
+```
+
+## Skills
+
+| Skill | Description |
+|-------|-------------|
+| `git-commit` | Stage and commit changes following project conventions |
