@@ -7,8 +7,26 @@ DEST_DIR_codex := $(HOME)/.codex/skills
 
 CLAUDE_DIR := $(HOME)/.claude
 
-.PHONY: install install-claude-config FORCE
+.PHONY: install test install-claude-config FORCE
 install: install-claude-config $(addprefix install-agent-,$(AGENTS))
+
+test:
+	@if [ -z "$(SKILLS)" ]; then \
+		echo "No tests."; \
+		exit 0; \
+	fi; \
+	fail=0; \
+	for skill in $(SKILLS); do \
+		if [ ! -f "$(SKILLS_DIR)/$$skill/SKILL.md" ]; then \
+			echo "Missing $(SKILLS_DIR)/$$skill/SKILL.md"; \
+			fail=1; \
+		fi; \
+	done; \
+	if [ $$fail -eq 0 ]; then \
+		echo "All skill tests passed."; \
+		exit 0; \
+	fi; \
+	exit 1
 
 install-claude-config:
 	cp claude/statusline.sh $(CLAUDE_DIR)/statusline.sh
