@@ -1,10 +1,24 @@
-CLAUDE_SKILLS_DIR := $(HOME)/.claude/skills
+SKILLS_DIR := skills
+SKILLS := $(notdir $(wildcard $(SKILLS_DIR)/*))
+AGENTS ?= claude codex
 
-.PHONY: install
-install: install-git-commit
+DEST_DIR_claude := $(HOME)/.claude/skills
+DEST_DIR_codex := $(HOME)/.codex/skills
 
-.PHONY: install-git-commit
-install-git-commit:
-	mkdir -p $(CLAUDE_SKILLS_DIR)/git-commit
-	cp skills/git-commit/SKILL.md $(CLAUDE_SKILLS_DIR)/git-commit/SKILL.md
-	@echo "Installed git-commit skill to $(CLAUDE_SKILLS_DIR)/git-commit/"
+.PHONY: install FORCE
+install: $(addprefix install-agent-,$(AGENTS))
+
+install-agent-%: FORCE
+	@dest_dir='$(DEST_DIR_$*)'; \
+	if [ -z "$$dest_dir" ]; then \
+		echo "Unknown agent '$*'. Configure DEST_DIR_$* in Makefile."; \
+		exit 1; \
+	fi; \
+	mkdir -p "$$dest_dir"; \
+	for skill in $(SKILLS); do \
+		mkdir -p "$$dest_dir/$$skill"; \
+		cp -R "$(SKILLS_DIR)/$$skill/." "$$dest_dir/$$skill/"; \
+		echo "Installed $$skill to $$dest_dir/$$skill/"; \
+	done
+
+FORCE:
