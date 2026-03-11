@@ -31,6 +31,11 @@ test:
 install-claude-config:
 	cp claude/statusline.sh $(CLAUDE_DIR)/statusline.sh
 	@echo "Installed statusline.sh to $(CLAUDE_DIR)/"
+	@settings="$(CLAUDE_DIR)/settings.json"; \
+	current=$$(cat "$$settings" 2>/dev/null || echo '{}'); \
+	updated=$$(printf '%s' "$$current" | jq '. + {"statusLine": {"type": "command", "command": "bash $(CLAUDE_DIR)/statusline.sh"}}'); \
+	printf '%s\n' "$$updated" > "$$settings"; \
+	echo "Configured statusLine in $$settings"
 
 install-agent-%: FORCE
 	@dest_dir='$(DEST_DIR_$*)'; \
