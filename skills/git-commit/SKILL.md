@@ -70,7 +70,7 @@ production metrics.
 
 ## Execution
 
-Pass the commit message via a heredoc to preserve formatting:
+MUST pass the commit message via a HERE doc to preserve formatting:
 
 ```bash
 git commit -m "$(cat <<'EOF'
@@ -81,4 +81,13 @@ EOF
 )"
 ```
 
-After committing, run `git status` to confirm success.
+After committing, run:
+
+```bash
+git log -1 --format=%B | awk 'length($0) > 72 { print NR ":" length($0) ":" $0 }'
+```
+
+If any body line is over 72 characters, amend before reporting success.
+
+After committing and confirming formatting, run `git status` to
+confirm success.
