@@ -47,7 +47,8 @@ Do NOT merely restate what is obvious from the diff.
 
 * Use `*`, not `-`
 * Indent bullets by two spaces with hanging indent for wrapped lines
-* No blank lines between single-line bullets; blank line between bullets if any wraps
+* If all bullets in a list are single-line: no blank lines between them
+* If any bullet in a list wraps to multiple lines: put a blank line between every bullet in that list
 
 ### Atomicity
 
