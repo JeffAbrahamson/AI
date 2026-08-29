@@ -71,7 +71,24 @@ production metrics.
 
 ## Execution
 
-MUST pass the commit message via a HERE doc to preserve formatting:
+Before running `git commit`, check the drafted message itself for
+line-length violations — never commit first and fix formatting
+afterward via amend:
+
+```bash
+awk 'length($0) > 72 { print NR ":" length($0) ":" $0 }' <<'EOF'
+Subject line here
+
+Body here.
+EOF
+```
+
+Also confirm the subject line is ≤50 characters. If anything is too
+long, rewrite the draft and re-check before proceeding — do not
+commit a draft that fails this check.
+
+Once the draft is clean, commit it via a HERE doc to preserve
+formatting:
 
 ```bash
 git commit -m "$(cat <<'EOF'
@@ -82,13 +99,4 @@ EOF
 )"
 ```
 
-After committing, run:
-
-```bash
-git log -1 --format=%B | awk 'length($0) > 72 { print NR ":" length($0) ":" $0 }'
-```
-
-If any body line is over 72 characters, amend before reporting success.
-
-After committing and confirming formatting, run `git status` to
-confirm success.
+Then run `git status` to confirm success.
