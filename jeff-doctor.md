@@ -12,6 +12,11 @@ other repositories' `AGENTS.md`/`CLAUDE.md` files.
    project (`CLAUDE.md`, `AGENTS.md`, `.claude/`, `.codex/`, or
    equivalent), and skim enough of the actual codebase and recent git
    history to judge real practice, not just documented practice.
+   Where possible, CLAUDE.md and AGENTS.md should not repeat each
+   other.  Things that are only sometimes necessary, such as git
+   behaviour, should be pushed to separate skill files in order not to
+   pollute context all the time for occasional tasks (but still
+   controlled by git, if this project is git-controlled).
 3. Compare both against each item in the checklist below.
 4. Report back as a **conformity report**: for each checklist item,
    say Met / Partial / Missing / Not applicable, with one line of
@@ -19,7 +24,7 @@ other repositories' `AGENTS.md`/`CLAUDE.md` files.
    checklist text. Skip items that are genuinely not applicable to
    this project's language/stack, but say so explicitly rather than
    silently omitting them.
-5. End with a short, prioritized list of concrete gaps worth fixing —
+5. End with a prioritised plan of concrete gaps worth fixing —
    things you could add to this project's `CLAUDE.md`/`AGENTS.md` or
    change in practice. Do not make changes yourself unless asked;
    propose them.
@@ -39,6 +44,19 @@ met.
   check and its conclusion out loud before running build/test
   commands.
 
+### Subagents
+
+- Instructions say when to delegate to a subagent rather than doing
+  the work inline: notably when a subtask would pull a lot of
+  disposable output (search results, file dumps, exploratory
+  research) into the main context that isn't needed afterward, or
+  when a subtask is better suited to a different model (cheaper/faster
+  for a narrow, well-specified job; more capable for something hard).
+- Instructions don't just say "use subagents" without criteria —
+  over-delegating trivial work is its own cost (spawn overhead, lost
+  shared context), so the guidance should help the agent judge when
+  delegation pays off versus when doing it inline is simpler.
+
 ### Testing
 
 - Agent instructions require running the project's real test suite
@@ -56,11 +74,13 @@ met.
 
 ### Git hygiene
 
-- If the project commonly uses worktrees or multiple local clones,
-  instructions warn against `cd`-ing into another worktree to run git
+- Instructions warn against `cd`-ing into another worktree to run git
   commands, and specifically against chaining `cd <dir> && git ...`,
   since that pattern can silently run commands against the wrong
-  branch.
+  branch. This applies even if the project has no worktrees or extra
+  clones active at the moment of the audit — worktrees tend to get
+  spun up ad hoc later, so the warning should be there before it's
+  needed, not added retroactively once it bites someone.
 - Instructions state whether the agent should ask before committing,
   and under what conditions it's fine to commit autonomously (e.g.
   "the user asked for several steps including committing along the
@@ -74,6 +94,13 @@ met.
   make clear to both the agent and a reviewer (human or subagent) that
   the new file exists and needs reviewing, rather than it silently
   showing up as untracked and easy to miss.
+- Instructions remind that git and GitHub are different tools despite
+  the overlap. Most work is done locally; anything interacting with
+  GitHub must be specifically authorised, either by the user in the
+  prompt or via a question-response that you initiate. If an operation
+  can be done locally, it probably should be: for example,
+  `git merge --ff-only` is almost always preferred to `gh pr merge` if
+  the user requested a merge.
 
 ### Commit messages
 
@@ -105,12 +132,16 @@ met.
   indent, hanging indent, blank-line rules) so formatting is
   deterministic instead of left to taste each time.
 - Each commit is one logical change; unrelated refactors, formatting,
-  and behavior changes aren't bundled together.
+  and behaviour changes aren't bundled together.
 - Issue/incident references, if used, go at the end in a consistent
   form (e.g. `Refs: #123` or `Part of #123`).
 - No emojis in commit messages (unless the project explicitly wants
   them). AI co-authorship, if credited, gets one plain line, not a
   decorative footer.
+- Commit messages default to British spelling (en-UK), unless the
+  project's existing commit history or codebase strongly and
+  consistently favours American spelling (en-US) or another language,
+  in which case the agent follows that ambient convention instead.
 
 ### Code review before commit
 
@@ -135,7 +166,7 @@ met.
 - If the review/fix cycle goes past about three rounds, instructions
   say to suspect a loop or a deeper problem rather than continuing to
   iterate indefinitely, and to ask the human for help at that point.
-- Human review feedback is analyzed and acted on judgment, not
+- Human review feedback is analysed and acted on judgment, not
   rubber-stamped — the reviewer (human or subagent) isn't trusted to
   be right any more than the agent trusts itself; if the agent
   disagrees with a piece of feedback, it says so and explains why
@@ -151,8 +182,13 @@ met.
   truth for style, rather than the agent's own taste.
 - Any project-specific naming or abbreviation conventions (e.g.
   spelling out an abbreviation on first use in a comment, function
-  naming prefixes that encode behavior) are written down somewhere the
+  naming prefixes that encode behaviour) are written down somewhere the
   agent will see them, not left to be inferred from reading code.
+- Code comments default to British spelling (en-UK), unless the
+  surrounding code/comments strongly and consistently indicate another
+  language or spelling convention (e.g. an American-English codebase,
+  or a codebase written in a language other than English), in which
+  case the agent follows that ambient convention instead.
 
 ### File and structural conventions
 
@@ -171,9 +207,3 @@ met.
   ground for information easily derived by reading the code.
 - If both `CLAUDE.md` and `AGENTS.md` exist, one clearly points at the
   other (or they're kept in sync) rather than silently diverging.
-
-## Follow on
-
-Expect that, after a possible conversation, the human will ask you to
-present a plan to fix what you can (modulo exceptions or additions
-that arose during the conversation).
