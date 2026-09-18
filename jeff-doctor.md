@@ -248,3 +248,25 @@ met.
   ground for information easily derived by reading the code.
 - If both `CLAUDE.md` and `AGENTS.md` exist, one clearly points at the
   other (or they're kept in sync) rather than silently diverging.
+
+### Jeff Doctor skill
+
+- The project has a Claude Code skill invocable as `/jeff-doctor`
+  (e.g. `.claude/skills/jeff-doctor/SKILL.md`) that runs this exact
+  checklist. This is Claude Code-specific convenience tooling layered
+  on top of an otherwise agent-agnostic workflow: a project using a
+  different agent (Codex, etc.) satisfies this item by pointing that
+  agent at this file directly, per "What to do" above — the skill
+  just saves Claude Code users from having to do that by hand each
+  time.
+- The skill reads `jeff-doctor.md` live from Jeff's `AI` repo at
+  invocation time — by path, not by a copy vendored into the target
+  project — so a project is always audited against whatever this file
+  currently says, not whatever it said when the skill was set up.
+- Before running the checklist, the skill checks whether that local
+  `AI` clone is exactly `origin/main` (fetch, then compare `HEAD` to
+  `origin/main`, and check for a clean working tree) and warns loudly
+  if it isn't — e.g. checked out to a different branch or commit,
+  ahead/behind `origin/main`, or with local edits — so a conformity
+  report is never silently produced against an unreviewed or stale
+  version of the checklist.
