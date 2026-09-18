@@ -151,6 +151,20 @@ met.
   sensible trivial-change exception (typo fixes, comment tweaks,
   one-line non-logic edits) and a rule to treat anything ambiguous as
   non-trivial.
+- The same review procedure and thoroughness apply regardless of the
+  code's origin — the agent's own work from this session, a handoff
+  from another session, or code from a human or another dev that the
+  agent is simply asked to review. No lighter treatment just because
+  the agent trusts its own recent output.
+- Instructions distinguish two points in the cycle rather than
+  reviewing every edit the same way: a lighter pass during or soon
+  after implementation, to catch obvious mistakes before they
+  compound, and a heavier pass once the change is believed complete
+  and close to hand-off. The heavier pass is where decomposing into a
+  few focused subagent reviews (e.g. correctness/bugs, security,
+  instruction-file compliance) run in parallel earns its cost — doing
+  that on every in-progress edit instead would spend more in spawn
+  overhead and re-review churn than it saves.
 - Instructions ask for transparency around this: a brief note when the
   review starts, that it's being waited on, and what its feedback was
   and how it was addressed — not a silent pass/fail.
@@ -171,6 +185,33 @@ met.
   be right any more than the agent trusts itself; if the agent
   disagrees with a piece of feedback, it says so and explains why
   rather than silently complying or silently ignoring it.
+
+### Review findings quality
+
+- Instructions say what *not* to report, so findings stay high-signal:
+  pre-existing issues, anything a linter/typechecker/CI would already
+  catch (the review doesn't re-run builds/tests/typecheck itself if CI
+  covers that — only run them directly when the project has no CI),
+  pedantic nitpicks a senior engineer wouldn't raise, issues on lines
+  the change didn't touch, and issues already silenced in code (e.g. a
+  lint-ignore comment). Reporting these trains the human to skim past
+  future findings.
+- Each finding explains its triggering condition and impact, not just
+  its existence — "this could be null" isn't a finding; "this crashes
+  when X, because Y" is.
+- Findings are ranked by severity/confidence and cite precise
+  file/line locations (plus a stable reference like a commit SHA, if
+  the review is posted somewhere outside the working tree) so a human
+  can jump straight to the issue instead of re-deriving it.
+- Review reading is scoped to the diff plus whatever's needed to
+  verify a suspected issue (surrounding implementation, tests, call
+  sites, git blame/history) — not an open-ended re-audit of the whole
+  codebase.
+- If the review finds nothing, instructions say to state that
+  explicitly.
+- A review pass is read-only by default: it reports findings and
+  doesn't edit code, fix issues, or commit, unless separately asked to
+  — keeping "find" and "fix" as separately-judgable steps.
 
 ### Style and comments
 

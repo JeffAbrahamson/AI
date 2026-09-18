@@ -43,6 +43,13 @@ upkeep). It's not installed anywhere — it's meant to be referenced
 directly from any other project to have an agent audit that project's
 conventions and practice against it.
 
+Its primary audience is always *other* repos — when editing the
+checklist, keep it self-contained and stack-agnostic, and don't let it
+assume anything about this AI repo's own structure or tooling. (It's
+fine, and expected, for the same general guidelines to also hold up
+here; that's just a side effect of them being good guidelines, not the
+point of the file.)
+
 To run it against the project you're currently working in, reference
 the file by path in your prompt, e.g. in Claude Code:
 
