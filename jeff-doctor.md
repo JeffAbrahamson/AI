@@ -89,6 +89,13 @@ met.
 - Destructive git operations (force-push, reset --hard, history
   rewrites, amending shared commits) are called out as requiring
   explicit user involvement.
+- Instructions say never to run `git push` in any form (including to
+  the agent's own branch) unless the prompt explicitly asks for it.
+  After a history rewrite, that push means a force-push, which needs
+  explicit approval every time — approval for one push doesn't carry
+  over to the next. An authorised force-push always means
+  `git push --force-with-lease`, never bare `--force`/`-f`, so it
+  fails rather than clobbering commits someone else pushed meanwhile.
 - New files are `git add --intent-to-add`ed as soon as they're
   created, before requesting a review — so `git diff`/`git status`
   make clear to both the agent and a reviewer (human or subagent) that
