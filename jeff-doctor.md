@@ -17,6 +17,17 @@ other repositories' `AGENTS.md`/`CLAUDE.md` files.
    behaviour, should be pushed to separate skill files in order not to
    pollute context all the time for occasional tasks (but still
    controlled by git, if this project is git-controlled).
+   Read any skills those instructions rely on, including commit
+   skills, and check their actual rules against this checklist too.
+   Report conflicting or stale guidance as a gap even when another
+   instruction file already has the preferred rule.
+   Check for local commit skills (such as `git-commit` or `/commit`),
+   including installed user-level skills even if the project's
+   instructions do not mention them. If one exists, consider
+   recommending its removal in favour of this checklist's commit
+   recommendations, especially when it duplicates or conflicts with
+   them. Propose removal in the report; do not remove it during the
+   audit without being asked.
 3. Compare both against each item in the checklist below.
 4. Report back as a **conformity report**: for each checklist item,
    say Met / Partial / Missing / Not applicable, with one line of
@@ -143,9 +154,10 @@ met.
   much less credible in a repo with high existing issue numbers or a
   long commit history, and should be treated with more suspicion (or
   skipped/asked about) in that case.
-- Bullet style is specified explicitly (marker character, two-space
-  indent, hanging indent, blank-line rules) so formatting is
-  deterministic instead of left to taste each time.
+- Body bullets use `*`, indented two spaces with a hanging indent
+  for wrapped lines. If all bullets in a list are single-line, there
+  are no blank lines between them; if any bullet wraps, there is a
+  blank line between every bullet in that list.
 - Each commit is one logical change; unrelated refactors, formatting,
   and behaviour changes aren't bundled together.
 - Issue/incident references, if used, go at the end in a consistent

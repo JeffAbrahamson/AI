@@ -27,11 +27,13 @@ make install AGENTS=claude
 make install AGENTS=codex
 ```
 
-## Skills
+## Commit conventions
 
-| Skill | Description |
-|-------|-------------|
-| `git-commit` | Stage and commit changes following project conventions |
+The former `git-commit` skill has been retired. Commit conventions
+live in the **Commit messages** section of [jeff-doctor.md](jeff-doctor.md).
+Remove any previously installed `git-commit` directories from
+`~/.claude/skills/` and `~/.codex/skills/`; `make install` does not
+remove retired skills.
 
 ## Jeff Doctor
 

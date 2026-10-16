@@ -23,14 +23,10 @@ This repo manages **skills** (reusable AI assistant prompts) and **configuration
 
 **Claude-specific config** (`claude/`) contains things like `statusline.sh`, which is copied directly to `~/.claude/`.
 
-To add a new skill: create `skills/<name>/SKILL.md` following the format in `skills/git-commit/SKILL.md`.
+To add a new skill: create `skills/<name>/SKILL.md` with the front matter described above and the skill's instructions.
 
 ## Commit Message Conventions
 
-This repo uses strict commit message rules (enforced by the `git-commit` skill):
-
-- Subject: imperative tense, max 50 chars, no trailing period
-- Body: explain *why* the change was necessary, the approach taken, and any tradeoffs — not what the diff already shows
-- Use `*` for bullets, indented two spaces with hanging indent
-- Each commit is one logical change (atomic)
-- Pass message via heredoc: `git commit -m "$(cat <<'EOF' ... EOF)"`
+Follow the **Commit messages** section of [jeff-doctor.md](jeff-doctor.md)
+when preparing commits in this repository. It is the source of truth
+for these conventions; do not maintain a separate copy in a commit skill.
