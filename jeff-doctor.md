@@ -43,6 +43,14 @@ met.
   Docker it's a deep path like `/home/...`") and require stating the
   check and its conclusion out loud before running build/test
   commands.
+- Where the project has `docker/docker-manage.sh`, agent instructions
+  explain that Jeff's interactive Bash function `dm` runs that script
+  from the `docker/` directory, forwarding all arguments. A human
+  request such as `dm test` therefore means
+  `(cd docker && ./docker-manage.sh test)`. The agent should use this
+  explicit form when `dm` isn't available in its shell. The function
+  checks that the script is readable and executable first; otherwise
+  it prints `No docker-manage.sh present.`
 
 ### Subagents
 
