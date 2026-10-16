@@ -35,6 +35,17 @@ Remove any previously installed `git-commit` directories from
 `~/.claude/skills/` and `~/.codex/skills/`; `make install` does not
 remove retired skills.
 
+## Jeff Docker
+
+The `jeff-docker` skill audits a project's Docker development setup
+against the live `~/src/jma/docker-template/` repository. It reads the
+current best practices and implementation, reports conformity, and
+proposes prioritised updates with an implementation and validation plan.
+It does not change the audited project unless asked.
+
+Install with `make install`, then invoke `/jeff-docker` in Claude Code
+or `$jeff-docker` in Codex from the project to audit.
+
 ## Jeff Doctor
 
 `jeff-doctor.md` is a standalone best-practices checklist distilled
