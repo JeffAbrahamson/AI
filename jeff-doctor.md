@@ -14,9 +14,10 @@ other repositories' `AGENTS.md`/`CLAUDE.md` files.
    history to judge real practice, not just documented practice.
    Where possible, CLAUDE.md and AGENTS.md should not repeat each
    other.  Things that are only sometimes necessary, such as git
-   behaviour, should be pushed to separate skill files in order not to
-   pollute context all the time for occasional tasks (but still
-   controlled by git, if this project is git-controlled).
+   behaviour, should be pushed to separate skill files or sub-files
+   (see "Documentation upkeep" below) in order not to pollute context
+   all the time for occasional tasks (but still controlled by git, if
+   this project is git-controlled).
    Read any skills those instructions rely on, including commit
    skills, and check their actual rules against this checklist too.
    Report conflicting or stale guidance as a gap even when another
@@ -275,6 +276,17 @@ met.
   ground for information easily derived by reading the code.
 - If both `CLAUDE.md` and `AGENTS.md` exist, one clearly points at the
   other (or they're kept in sync) rather than silently diverging.
+- Guidance needed only for occasional tasks is moved out of
+  `CLAUDE.md`/`AGENTS.md` into sub-files, with an explicit instruction
+  in the main file saying when to read each one. Git and GitHub
+  guidance is the usual candidate, e.g. "When doing any git or gh
+  operation, you must first read and understand GIT.md". The trigger
+  must be concrete enough that the agent can't plausibly miss it; a
+  bare "see GIT.md" with no condition doesn't count.
+- The last line of `CLAUDE.md`, `AGENTS.md` and every sub-file they
+  refer the agent to (such as `GIT.md`) tells the agent to confirm
+  aloud that it has read the file, so a human can see from the
+  transcript that the instructions were actually loaded.
 
 ### Jeff Doctor skill
 
