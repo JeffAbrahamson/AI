@@ -46,6 +46,25 @@ It does not change the audited project unless asked.
 Install with `make install`, then invoke `/jeff-docker` in Claude Code
 or `$jeff-docker` in Codex from the project to audit.
 
+## Blog post
+
+The `blog-post` skill drafts or improves a post for the blog and
+LinkedIn from a draft and supporting documents, mainly on mobility and
+nonprofit governance, or discusses a draft's argument and style before
+it becomes a post. It examines the argument and evidence before the
+prose, challenges the author where useful, and writes the post in
+French by default as `<slug>.md` (blog) and `<slug>.txt` (LinkedIn,
+plain text, at most 3,000 characters), with editorial notes,
+verification notes, and a justified visual choice. The research behind
+its style code, with sources and limits, is in
+`skills/blog-post/references/evidence.md`.
+
+Install with `make install`, then invoke `/blog-post` in Claude Code
+or `$blog-post` in Codex, giving the draft and, where useful, whether
+you want discussion or a post, the audience, intended effect, speaking
+role (personal or association, with any CA statement), points that
+must remain, and supporting documents.
+
 ## Jeff Doctor
 
 `jeff-doctor.md` is a standalone best-practices checklist distilled
