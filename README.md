@@ -52,11 +52,13 @@ The `blog-post` skill drafts or improves a post for the blog and
 LinkedIn from a draft and supporting documents, mainly on mobility and
 nonprofit governance, or discusses a draft's argument and style before
 it becomes a post. It examines the argument and evidence before the
-prose, challenges the author where useful, and writes the post in
-French by default as `<slug>.md` (blog) and `<slug>.txt` (LinkedIn,
-plain text, at most 3,000 characters), with editorial notes,
-verification notes, and a justified visual choice. The research behind
-its style code, with sources and limits, is in
+prose, researches factual claims independently, challenges the author
+where useful, and writes the post in French by default as `<slug>.md`
+(blog) and `<slug>.txt` (LinkedIn, plain text, at most 3,000
+characters). It also writes `<slug>-research.md`, with each claim's
+research status and citations, and gives editorial notes, verification
+notes, and a justified visual choice. The research behind its style
+code, with sources and limits, is in
 `skills/blog-post/references/evidence.md`.
 
 Install with `make install`, then invoke `/blog-post` in Claude Code
